@@ -1,0 +1,54 @@
+# Fly.io configuration for Activity Presence Controller agent
+# 
+# To deploy:
+#   1. Install flyctl: https://fly.io/docs/getting-started/installing-flyctl/
+#   2. From agent/ directory: flyctl launch
+#   3. Update this file with your app name
+#   4. Set APC_CLOUD_MODE=true below
+#   5. flyctl deploy
+
+app = "apc-agent"
+
+# Free tier uses shared CPU, set to "shared-cpu-1x" for free tier
+# Paid: "performance-1x", "performance-2x", etc.
+primary_region = "ord"  # Change to your closest region (lax, fra, syd, etc.)
+
+[build]
+dockerfile = "Dockerfile"
+
+[env]
+# Cloud mode: disables cursor movement since cloud servers are headless
+APC_CLOUD_MODE = "true"
+
+# Allow insecure HTTP (for development; consider TLS for production)
+APC_ALLOW_INSECURE = "true"
+
+# Bind to all interfaces (required for cloud)
+APC_BIND = "0.0.0.0:8787"
+
+# Optional: set pairing token for security (replace with strong random string)
+# APC_PAIRING_TOKEN = "your-secret-token-here"
+
+[http_service]
+internal_port = 8787
+force_https = false  # Set to true if you configure TLS cert
+
+# Health check endpoint (no auth required)
+[[http_service.checks]]
+type = "http"
+method = "GET"
+path = "/health"
+interval = 10000
+timeout = 5000
+grace_period = "30s"
+
+# Scaling configuration
+[processes]
+app = "apc-agent"
+
+[[vm]]
+# Free tier: shared-cpu-1x (1 shared CPU, 256MB RAM)
+# Paid: performance-1x (1 CPU, 2GB RAM), performance-2x (2 CPUs, 4GB RAM)
+cpu_kind = "shared"
+cpus = 1
+memory_mb = 256

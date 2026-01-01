@@ -1,0 +1,9 @@
+{
+  "name": "Activity Presence Controller",
+  "short_name": "APC",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1021",
+  "theme_color": "#0b1021",
+  "icons": []
+}
