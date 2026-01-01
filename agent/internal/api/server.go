@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"sync"
 	"time"
@@ -277,8 +278,23 @@ func (s *Server) auth(next http.HandlerFunc) http.HandlerFunc {
 
 func (s *Server) cors(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Development-only permissive CORS. In production, tighten origins.
-		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+		origin := r.Header.Get("Origin")
+
+		// Echo caller origin when present; fallback to wildcard for non-browser clients.
+		// For stricter control, set APC_ALLOWED_ORIGINS="https://foo.app,https://bar.app".
+		if allowList := strings.TrimSpace(os.Getenv("APC_ALLOWED_ORIGINS")); allowList != "" {
+			for _, o := range strings.Split(allowList, ",") {
+				if strings.EqualFold(strings.TrimSpace(o), origin) {
+					w.Header().Set("Access-Control-Allow-Origin", origin)
+					break
+				}
+			}
+		} else if origin != "" {
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+		} else {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+		}
+
 		w.Header().Set("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 		w.Header().Set("Access-Control-Allow-Credentials", "false")
