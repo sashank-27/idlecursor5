@@ -7,20 +7,26 @@ Welcome to your fully cloud-ready Activity Presence Controller! This project now
 ## ⚡ Quick Start (Choose One)
 
 ### 🖥️ **I want to keep my Windows PC active (WFH)**
-→ **5 minute setup**
+→ **5 minute setup** (Python version)
 
-```powershell
+**Easiest Method - Automatic Setup:**
+```batch
+full-setup.bat
+```
+Then open `launcher.bat` to run the services.
+
+**Manual Method:**
+```batch
 cd agent
-$env:APC_CLOUD_MODE="false"
-go run ./cmd/apc-agent/main.go
+setup-and-run.bat
 
 # In another terminal:
 cd web
-npm install && npm run dev
+npm-setup-and-run.bat
 # Open http://localhost:5173 and click Start
 ```
 
-**Next:** [Local Setup Guide](docs/GETTING_STARTED.md#run-locally)
+**Next:** [Quick Start Windows Guide](QUICK_START_WINDOWS.md) | [Detailed Setup](docs/GETTING_STARTED.md#run-locally)
 
 ---
 
