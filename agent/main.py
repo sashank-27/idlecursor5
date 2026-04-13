@@ -45,6 +45,12 @@ def main():
         host = bind_addr
         port = 8787
 
+    # Default to insecure mode in development (easier to use)
+    # Production should explicitly set cert files or disable insecure
+    if not allow_insecure and not (cert_file and key_file):
+        allow_insecure = True
+        logger.warning("APC_ALLOW_INSECURE not set; defaulting to HTTP for development")
+
     config = {
         "host": host,
         "port": port,

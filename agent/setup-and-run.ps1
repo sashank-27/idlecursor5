@@ -137,18 +137,17 @@ if ($LASTEXITCODE -ne 0) {
 
 Write-Success "All modules verified"
 
-# Set environment variables
+# Set environment variables (optional - agent defaults to insecure for dev)
 Write-Header "Starting Agent"
 Write-Info "Setting environment variables..."
 
-$env:APC_ALLOW_INSECURE = "true"
 $env:APC_CLOUD_MODE = "false"
 $env:APC_BIND = "127.0.0.1:$Port"
 
 Write-Success "Environment variables set:"
-Write-Host "  APC_ALLOW_INSECURE = $env:APC_ALLOW_INSECURE"
 Write-Host "  APC_CLOUD_MODE = $env:APC_CLOUD_MODE"
 Write-Host "  APC_BIND = $env:APC_BIND"
+Write-Host "  (APC_ALLOW_INSECURE defaults to true for development)"
 
 # Run the agent
 Write-Header "Running Agent"

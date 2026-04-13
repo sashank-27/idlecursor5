@@ -43,12 +43,14 @@ You can customize the agent by setting these before running:
 |----------|---------|-------------|
 | `APC_BIND` | `0.0.0.0:8787` | Server address and port |
 | `APC_CLOUD_MODE` | `false` | true=no cursor, false=cursor movement |
-| `APC_ALLOW_INSECURE` | `false` | true=HTTP only (dev), false=HTTPS required |
+| `APC_ALLOW_INSECURE` | `true` (dev) | true=HTTP only, false=HTTPS required |
 | `APC_PAIRING_TOKEN` | (none) | Optional bearer token for auth |
 | `APC_CERT_FILE` | (none) | Path to TLS cert |
 | `APC_KEY_FILE` | (none) | Path to TLS key |
 
-Example:
+**Note**: In development mode, `APC_ALLOW_INSECURE` defaults to `true` for convenience. The agent can be started with no environment variables and will work out of the box.
+
+Example with custom settings:
 ```batch
 set APC_BIND=127.0.0.1:9000
 set APC_CLOUD_MODE=false

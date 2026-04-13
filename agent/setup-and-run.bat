@@ -61,16 +61,15 @@ echo.
 echo [+] All dependencies installed
 echo.
 
-REM Set environment variables
+REM Set environment variables (optional - agent defaults to insecure for dev)
 echo [*] Setting environment variables...
-set APC_ALLOW_INSECURE=true
 set APC_CLOUD_MODE=false
 set APC_BIND=127.0.0.1:8787
 
 echo [+] Environment configured:
-echo     APC_ALLOW_INSECURE = %APC_ALLOW_INSECURE%
 echo     APC_CLOUD_MODE = %APC_CLOUD_MODE%
 echo     APC_BIND = %APC_BIND%
+echo     (APC_ALLOW_INSECURE defaults to true for development)
 echo.
 
 REM Run the agent
